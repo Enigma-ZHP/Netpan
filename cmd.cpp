@@ -1,5 +1,5 @@
 #include"cmd.hpp"
-int cmd_ls(char* var)
+int cmd_ls(const char* var)
 {
     DIR* dirp = NULL;
     struct dirent* direntp = NULL;
@@ -32,6 +32,36 @@ int cmd_pwd()
     {
         std::cout << "pwd fail" << std::endl;
         return 1;
+    }else{
+        std::cout << buf << std::endl;
+        return 0;
     }
-    std::cout << buf << std::endl;
 }
+
+int cmd_mkdir(char* filename)
+{
+    if(0 == mkdir(filename,0774))
+    {
+        std::cout << "new dir create success" << std::endl;
+        return 0;
+    }else{
+        std::cout << "mkdir error" << std::endl;
+        return 1;
+    }
+
+}
+int cmd_cd(const char* path)
+{
+    char buf[4096];
+    if(0 == chdir(path))
+    {
+        getcwd(buf,4096);
+        std::cout << "change dir success current dir is " << buf << std::endl;
+        return 0;
+    }
+    else{
+        std::cout << "cd fail" << std::endl;
+        return 1;
+    }
+}
+
